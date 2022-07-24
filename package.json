@@ -1,0 +1,19 @@
+{
+  "name": "Guess-the-drawing-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "server:dev": "set NODE_ENV=development&&nodemon server.js",
+    "server:prod": "set NODE_ENV=production&&node server.js"
+  },
+  "author": "Yotam Aloni",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "socket.io": "^4.5.1"
+  }
+}
