@@ -1,4 +1,3 @@
-
 var gIo = null;
 
 function connectSockets(http, session) {
@@ -13,37 +12,36 @@ function connectSockets(http, session) {
       console.log("Someone disconnected");
     });
 
-    socket.on("board-watch", (boardId) => {
-      console.log("board-watch boardId:", boardId);
-
-      if (socket.boardId === boardId) return;
-      if (socket.boardId) {
+    socket.on("game-watch", (gameId) => {
+      console.log("game-watch gameId:", gameId);
+      if (socket.gameId === gameId) return;
+      if (socket.gameId) {
         socket.leave(socket.boardId);
       }
-      socket.join(boardId);
-      socket.boardId = boardId;
+      socket.join(gameId);
+      socket.gameId = gameId;
     });
-    socket.on("task-watch", (taskId) => {
-      console.log("board-watch boardId:", taskId);
 
-      if (socket.taskId === taskId) return;
-      if (socket.taskId) {
-        socket.leave(socket.taskId);
-      }
-      socket.join(boardId);
-      socket.boardId = boardId;
+    socket.on("player-in", (gameId) => {
+      socket.to(socket.gameId).emit("player-in", gameId);
     });
-    
-
-    socket.on("board-update", (board) => {
-      console.log(" board-update boardId:", board._id);
-      console.log("board-update", socket.boardId);
-      socket.to(socket.boardId).emit("board-update", board);
-      // socket.broadcast.emit("board-update", board); //IF ITS ON - SO DONT USE BOARD-WATCH
+    socket.on("player-leave", (gameId) => {
+      socket.to(socket.gameId).emit("player-leave", gameId);
     });
-    socket.on("task-update", (task) => {
-      console.log(" task-update taskId:", task.id);
-      socket.broadcast.emit("task-update", task);
+    socket.on("player-won", (gameId) => {
+      socket.to(socket.gameId).emit("player-won", gameId);
+    });
+    socket.on("start-drawing", (pos) => {
+      socket.to(socket.gameId).emit("start-drawing", pos);
+    });
+    socket.on("draw", (pos) => {
+      socket.to(socket.gameId).emit("draw", pos);
+    });
+    socket.on("finish-drawing", (pos) => {
+      socket.to(socket.gameId).emit("finish-drawing", pos);
+    });
+    socket.on("clear-canvas", (pos) => {
+      socket.to(socket.gameId).emit("clear-canvas", pos);
     });
   });
 }

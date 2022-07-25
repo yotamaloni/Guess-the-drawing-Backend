@@ -12,4 +12,15 @@ async function getGame(req, res) {
   }
 }
 
-module.exports = { getGame };
+async function getGameById(req, res) {
+  try {
+    const gameId = req.params.id;
+    const game = await gameService.getById(gameId);
+    res.json(game);
+  } catch (err) {
+    logger.error("Failed to get game", err);
+    res.status(500).send({ err: "Failed to get game" });
+  }
+}
+
+module.exports = { getGame, getGameById };

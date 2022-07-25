@@ -1,8 +1,11 @@
 const dbService = require("../../services/db.service");
+const utilService = require("../../services/util.service");
 const ObjectId = require("mongodb").ObjectId;
+const randomWords = require("../../collection-of-words");
 
 module.exports = {
   getTheGame,
+  getById,
 };
 
 async function getTheGame(player) {
@@ -27,9 +30,14 @@ async function addPlayerToGame(collection, player, gameId) {
   }
 }
 async function addNewGame(collection, player) {
+  const words = randomWords;
+  const length = words.length;
+  const randomNum = utilService.getRandomIntInclusive(0, length - 1);
+  console.log(words[randomNum]);
   try {
     const game = {
       players: [player],
+      word: words[randomNum],
     };
     await collection.insertOne(game);
     return game;
@@ -44,4 +52,15 @@ function _buildCriteria(playerType) {
     $and: [{ "players.type": typeToFind }, { players: { $size: 1 } }],
   };
   return criteria;
+}
+
+async function getById(gameId) {
+  try {
+    const collection = await dbService.getCollection("game");
+    const game = await collection.findOne({ _id: ObjectId(gameId) });
+    return game;
+  } catch (err) {
+    logger.error(`while finding board ${gameId}`, err);
+    throw err;
+  }
 }
