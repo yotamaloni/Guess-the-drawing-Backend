@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Guess the drawing",
+  "name": "Play online against player around the world!",
   "icons": [
     {
       "src": "favicon.ico",

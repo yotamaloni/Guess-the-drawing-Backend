@@ -70,7 +70,6 @@ async function remove(gameId) {
   try {
     const collection = await dbService.getCollection("game");
     await collection.deleteOne({ _id: ObjectId(gameId) });
-    console.log("🟡 ~ collection", collection)
     return gameId;
   } catch (err) {
     console.log(`cannot remove game ${gameId}`, err);
