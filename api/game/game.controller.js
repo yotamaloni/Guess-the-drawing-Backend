@@ -23,4 +23,15 @@ async function getGameById(req, res) {
   }
 }
 
-module.exports = { getGame, getGameById };
+async function removeGame(req, res) {
+  try {
+    const gameId = req.params.id;
+    await gameService.remove(gameId);
+    res.send();
+  } catch (err) {
+    console.log("Failed to remove game", err);
+    res.status(500).send({ err: "Failed to remove game" });
+  }
+}
+
+module.exports = { getGame, getGameById,removeGame };

@@ -1,12 +1,15 @@
 {
   "name": "Guess-the-drawing-backend",
   "version": "1.0.0",
-  "description": "",
+  "engines": {
+    "node": "16.x"
+  },
+  "description": "Guess-the-drawing-backend",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "server:dev": "set NODE_ENV=development&&nodemon server.js",
-    "server:prod": "set NODE_ENV=production&&node server.js"
+    "server:prod": "node server.js"
   },
   "author": "Yotam Aloni",
   "license": "ISC",

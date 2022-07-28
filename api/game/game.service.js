@@ -6,6 +6,7 @@ const randomWords = require("../../collection-of-words");
 module.exports = {
   getTheGame,
   getById,
+  remove,
 };
 
 async function getTheGame(player) {
@@ -61,6 +62,18 @@ async function getById(gameId) {
     return game;
   } catch (err) {
     logger.error(`while finding board ${gameId}`, err);
+    throw err;
+  }
+}
+
+async function remove(gameId) {
+  try {
+    const collection = await dbService.getCollection("game");
+    await collection.deleteOne({ _id: ObjectId(gameId) });
+    console.log("🟡 ~ collection", collection)
+    return gameId;
+  } catch (err) {
+    console.log(`cannot remove game ${gameId}`, err);
     throw err;
   }
 }
