@@ -18,7 +18,7 @@ async function getGameById(req, res) {
     const game = await gameService.getById(gameId);
     res.json(game);
   } catch (err) {
-    logger.error("Failed to get game", err);
+    console.log("Failed to get game", err);
     res.status(500).send({ err: "Failed to get game" });
   }
 }

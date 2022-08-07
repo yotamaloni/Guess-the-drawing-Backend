@@ -1,7 +1,7 @@
 const dbService = require("../../services/db.service");
 const utilService = require("../../services/util.service");
 const ObjectId = require("mongodb").ObjectId;
-const randomWords = require("../../collection-of-words");
+const collectionOfWords = require("../../collection-of-words");
 
 module.exports = {
   getTheGame,
@@ -31,15 +31,15 @@ async function addPlayerToGame(collection, player, gameId) {
   }
 }
 async function addNewGame(collection, player) {
-  const words = randomWords;
+  const words = collectionOfWords;
   const length = words.length;
   const randomNum = utilService.getRandomIntInclusive(0, length - 1);
-  console.log(words[randomNum]);
   try {
     const game = {
       players: [player],
       word: words[randomNum],
     };
+    game.words = _getRandomWords(game.word);
     await collection.insertOne(game);
     return game;
   } catch (err) {
@@ -61,7 +61,7 @@ async function getById(gameId) {
     const game = await collection.findOne({ _id: ObjectId(gameId) });
     return game;
   } catch (err) {
-    logger.error(`while finding board ${gameId}`, err);
+    console.log(`while finding board ${gameId}`, err);
     throw err;
   }
 }
@@ -75,4 +75,21 @@ async function remove(gameId) {
     console.log(`cannot remove game ${gameId}`, err);
     throw err;
   }
+}
+
+function _getRandomWords(word) {
+  const allWords = [...collectionOfWords];
+  const randomWords = [];
+  var i = 0;
+  while (i < 5) {
+    const randomIdx = utilService.getRandomIntInclusive(0, allWords.length - 1);
+    const randomWord = allWords.splice(randomIdx, 1)[0];
+    if (allWords[randomIdx] !== word) {
+      randomWords.push({ txt: randomWord, id: utilService.makeId() });
+      i++;
+    }
+  }
+  const randomIdx = utilService.getRandomIntInclusive(0, randomWords.length);
+  randomWords.splice(randomIdx, 0, { txt: word, id: utilService.makeId() });
+  return randomWords;
 }

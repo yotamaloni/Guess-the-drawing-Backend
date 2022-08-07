@@ -1,14 +1,12 @@
-
-
-randomWords = [
+collectionOfWords = [
   "dog",
   "cat",
   "lamp",
   "cow",
-  "soccer ball",
+  "ball",
   "boat",
   "cherry",
-  "glass of water",
+  "elephant",
   "umbrella",
   "lion",
   "spider",
@@ -16,6 +14,21 @@ randomWords = [
   "helicopter",
   "plain",
   "coin",
+  "flag",
+  "apple",
+  "man",
+  "woman",
+  "microphone",
+  "house",
+  "computer",
+  "horse",
+  "sun",
+  "moon",
+  "star",
+  "turtle",
+  "fire",
+  "hat",
+  "glasses",
 ];
 
-module.exports = randomWords;
+module.exports = collectionOfWords;
