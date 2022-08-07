@@ -1,4 +1,4 @@
-# Guess the drawing - Front End Section
+# Guess the drawing - Back End Section
 
 ## Author: Yotam Aloni
 
