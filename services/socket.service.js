@@ -31,6 +31,9 @@ function connectSockets(http, session) {
     socket.on("player-won", (gameId) => {
       socket.to(socket.gameId).emit("player-won", gameId);
     });
+    socket.on("player-lost", (gameId) => {
+      socket.to(socket.gameId).emit("player-lost", gameId);
+    });
     socket.on("start-drawing", (pos) => {
       socket.to(socket.gameId).emit("start-drawing", pos);
     });

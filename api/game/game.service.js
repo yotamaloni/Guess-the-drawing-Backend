@@ -84,12 +84,12 @@ function _getRandomWords(word) {
   while (i < 5) {
     const randomIdx = utilService.getRandomIntInclusive(0, allWords.length - 1);
     const randomWord = allWords.splice(randomIdx, 1)[0];
-    if (allWords[randomIdx] !== word) {
+    if (randomWord !== word) {
       randomWords.push({ txt: randomWord, id: utilService.makeId() });
       i++;
     }
   }
-  const randomIdx = utilService.getRandomIntInclusive(0, randomWords.length);
+  const randomIdx = utilService.getRandomIntInclusive(0, randomWords.length-1);
   randomWords.splice(randomIdx, 0, { txt: word, id: utilService.makeId() });
   return randomWords;
 }
